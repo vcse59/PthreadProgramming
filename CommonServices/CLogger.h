@@ -15,6 +15,14 @@
 #include "CMutex.h"
 #include "CLogLevel.h"
 
+#define	LOG_PRINT(logMessage)	\
+    mpMutex->lockMutex();	\
+    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);	\
+    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " "	\
+    << lLogLevelStr << " " << logMessage;	\
+    mpMutex->unLockMutex();	\
+    return lOStream;
+
 class CLogger
 {
 public:

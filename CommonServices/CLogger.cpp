@@ -11,7 +11,6 @@
 #include "CLogger.h"
 #include "CLogLevel.h"
 
-
 CLogger::CLogger(LOG_LEVEL_ENUM    pAppLogLevel)
 	:mAppLogLevel(pAppLogLevel)
 {
@@ -44,29 +43,17 @@ std::string CLogger::getCurrentDateTime()
 
 std::ostream& CLogger::operator<<(const char *pLogMessageStream)
 {
-    mpMutex->lockMutex();
-    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
-    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
-    mpMutex->unLockMutex();
-    return lOStream;
+    LOG_PRINT(pLogMessageStream)
 }
 
 std::ostream& CLogger::operator<<(unsigned int pLogMessageStream)
 {
-    mpMutex->lockMutex();
-    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
-    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
-    mpMutex->unLockMutex();
-    return lOStream;
+    LOG_PRINT(pLogMessageStream)
 }
 
 std::ostream& CLogger::operator<<(std::string pLogMessageStream)
 {
-    mpMutex->lockMutex();
-    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
-    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
-    mpMutex->unLockMutex();
-    return lOStream;
+    LOG_PRINT(pLogMessageStream)
 }
 
 CLogger& CLogger::operator()(LOG_LEVEL_ENUM pLogLevel)

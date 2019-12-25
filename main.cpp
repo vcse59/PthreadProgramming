@@ -19,8 +19,8 @@
 #include "CommonServices/CLogger.h"
 #include "CommonServices/CLogLevel.h"
 
-#define MAX_CONSUMER_THREAD  20
-#define MAX_PRODUCER_THREAD  1
+#define MAX_CONSUMER_THREAD  2
+#define MAX_PRODUCER_THREAD  20
 
 int main(int argc, const char * argv[]) {
     // insert code here...
