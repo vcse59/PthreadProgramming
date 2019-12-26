@@ -1,5 +1,5 @@
 //
-//  CQueue.hpp
+//  CQueue.h
 //  ThreadProgramming
 //
 //  Created by Vivek Yadav on 1/12/19.
@@ -29,13 +29,13 @@ namespace CommonServices
 
 		unsigned int size();
 
-		void push_front(CPipelineData* pData, unsigned int pDataId);
+		void push_front(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId);
 
-		void push_back(CPipelineData* pData, unsigned int pDataId);
+		void push_back(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId);
 
 		void erase(unsigned dataId);
 
-		CPipelineData* getQueueData(unsigned int pIndex);
+		ApplicationData::PipelineData::CPipelineData* getQueueData(unsigned int pIndex);
 
 		void pop_front();
 
@@ -55,4 +55,4 @@ namespace CommonServices
 }
 #include <stdio.h>
 
-#endif /* CQueue_hpp */
+#endif /* CQueue_h */

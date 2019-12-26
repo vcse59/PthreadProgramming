@@ -16,21 +16,27 @@
 #include "../CommonServices/CQueue.h"
 #include "../CommonServices/CLogger.h"
 
-class CProducer : public CommonServices::Services::Ctask
+namespace ApplicationData
 {
-public:
-    CProducer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger,
-	    CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
-	    CommonServices::Services::CMutex &pMutex);
-    ~CProducer();
-    
-    void run();
-    void cleanup();
-    
-private:
-    CommonServices::Logger::CLogger &mLogger;
-    char *mThreadData;
-    CommonServices::Services::CMutex  &mMutex;
-};
+    namespace Producer
+    {
+	class CProducer : public CommonServices::Services::Ctask
+	{
+	    public:
+		CProducer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger,
+			CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
+			CommonServices::Services::CMutex &pMutex);
+		~CProducer();
+
+		void run();
+		void cleanup();
+
+	    private:
+		CommonServices::Logger::CLogger &mLogger;
+		char *mThreadData;
+		CommonServices::Services::CMutex  &mMutex;
+	};
+    }
+}
 
 #endif /* CProducer_h */

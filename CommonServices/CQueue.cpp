@@ -38,7 +38,8 @@ CQueue::~CQueue()
     {
 	CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
 	    = (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->getDataByIndex(lCount));
-        CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
+        ApplicationData::PipelineData::CPipelineData *lPipeLineData = 
+	    (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
      
         mpMutex->lockMutex();
         if(lPipeLineData != NULL)
@@ -78,7 +79,7 @@ unsigned int CQueue::size()
     mLogger(DEBUG) << "Exiting CQueue::size" << std::endl;
 }
 
-void CQueue::push_front(CPipelineData* pData, unsigned int pDataId)
+void CQueue::push_front(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId)
 {
     mLogger(DEBUG) << "Entering CQueue::push_front" << std::endl;
     // Allocate and initialize memory of dataContext_t size
@@ -99,7 +100,7 @@ void CQueue::push_front(CPipelineData* pData, unsigned int pDataId)
     mLogger(DEBUG) << "Exiting CQueue::push_front" << std::endl;
 }
 
-void CQueue::push_back(CPipelineData* pData, unsigned int pDataId)
+void CQueue::push_back(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId)
 {
     mLogger(DEBUG) << "Entering CQueue::push_back" << std::endl;
     // Allocate and initialize memory of dataContext_t size
@@ -134,7 +135,8 @@ void CQueue::erase(unsigned int pDataId)
         if(lDataContext_p->dataId == pDataId)
         {
 	    mpMutex->lockMutex();
-            CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
+            ApplicationData::PipelineData::CPipelineData *lPipeLineData 
+		= (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
             
             if(lPipeLineData != NULL)
             {
@@ -164,7 +166,8 @@ void CQueue::pop_front()
     mLogger(INFO) << "CQueue::pop_front Queue length : " << dQueueContainer->length() << std::endl;
     CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
 	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->begin());
-    CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
+    ApplicationData::PipelineData::CPipelineData *lPipeLineData 
+	= (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
     
     mpMutex->lockMutex();
     if(lPipeLineData != NULL)
@@ -191,7 +194,8 @@ void CQueue::pop_back()
     
     CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
 	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->end());
-    CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
+    ApplicationData::PipelineData::CPipelineData *lPipeLineData 
+	= (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
     
     mpMutex->lockMutex();
     if(lPipeLineData != NULL)
@@ -206,7 +210,7 @@ void CQueue::pop_back()
     mLogger(DEBUG) << "Exiting CQueue::pop_back" << std::endl;
 }
 
-CPipelineData* CQueue::getQueueData(unsigned int pIndex)
+ApplicationData::PipelineData::CPipelineData* CQueue::getQueueData(unsigned int pIndex)
 {
     mLogger(DEBUG) << "Entering CQueue::getQueueData" << std::endl;
     CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
@@ -215,7 +219,7 @@ CPipelineData* CQueue::getQueueData(unsigned int pIndex)
     if (lDataContext_p == NULL)
         return NULL;
     mLogger(DEBUG) << "Exiting CQueue::getQueueData" << std::endl;
-    return (CPipelineData*)(lDataContext_p->data);
+    return (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
 }
 
 void CQueue::setExecutionFlag(bool isStop)

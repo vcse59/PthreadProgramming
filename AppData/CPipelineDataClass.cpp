@@ -8,11 +8,13 @@
 
 #include "CPipelineDataClass.h"
 
+using namespace ApplicationData::PipelineData;
+
 CPipelineData::CPipelineData(std::string pTaskName, char* pThreadData):mTaskName(pTaskName), mThreadData(pThreadData)
 {
     std::cout << "CPipelineData constructor" << std::endl;
-    mData = (THREAD_STRUCT*) malloc(sizeof(THREAD_STRUCT));
-    memset(mData, 0, sizeof(THREAD_STRUCT));
+    mData = (ApplicationData::ThreadData::THREAD_STRUCT*) malloc(sizeof(ApplicationData::ThreadData::THREAD_STRUCT));
+    memset(mData, 0, sizeof(ApplicationData::ThreadData::THREAD_STRUCT));
     mIsObsolete = false;
 }
 

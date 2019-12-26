@@ -12,6 +12,7 @@
 #include "../AppData/CPipelineDataClass.h"
 
 using namespace CommonServices::Logger;
+using namespace ApplicationData::Producer;
 
 CProducer::CProducer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger, 
 		CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
@@ -46,7 +47,8 @@ void CProducer::run()
             mLogger(DEBUG) << "---> STOP " << this->getTaskName() << "  EXECUTION" << std::endl;
             break;
         }
-        CPipelineData *lPipeLineData = new CPipelineData(this->getTaskName(), mThreadData);
+        ApplicationData::PipelineData::CPipelineData *lPipeLineData 
+	    = new ApplicationData::PipelineData::CPipelineData(this->getTaskName(), mThreadData);
         unsigned int lDataId = lPipeLineData->pack((char*)(this->getTaskName().c_str()), strlen("TASK"));
 	mMutex.lockMutex();
         m_Pipeline->push_back(lPipeLineData, lDataId);

@@ -15,21 +15,26 @@
 #include "../CommonServices/CQueue.h"
 #include "../CommonServices/CLogger.h"
 
-class CConsumer : public CommonServices::Services::Ctask
+namespace ApplicationData
 {
-public:
-    CConsumer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger,
-		    CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
-		    CommonServices::Services::CMutex &pMutex);
-    ~CConsumer();
-    
-    void run();
-    void cleanup();
-    
-private:
-    CommonServices::Logger::CLogger& mLogger;
-    char *mThreadData;
-    CommonServices::Services::CMutex &mMutex;
-};
+    namespace Consumer
+    {
+	class CConsumer : public CommonServices::Services::Ctask
+	{
+	    public:
+		CConsumer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger,
+			CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
+			CommonServices::Services::CMutex &pMutex);
+		~CConsumer();
 
+		void run();
+		void cleanup();
+
+	    private:
+		CommonServices::Logger::CLogger& mLogger;
+		char *mThreadData;
+		CommonServices::Services::CMutex &mMutex;
+	};
+    }
+}
 #endif /* CConsumer_h */

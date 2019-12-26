@@ -11,10 +11,15 @@
 
 #include <string.h>
 
-typedef struct thread_struct_s
+namespace ApplicationData
 {
-    int lDataId;
-    char* lThreadData;
-}THREAD_STRUCT;
-
+    namespace	ThreadData
+    {
+	typedef struct thread_struct_s
+	{
+	    int lDataId;
+	    char* lThreadData;
+	}THREAD_STRUCT;
+    }
+}
 #endif /* CApplicationData_h */

@@ -14,17 +14,23 @@
 #include "../CommonServices/CDataPackUnPack.h"
 #include "../CApplicationData.h"
 
-class CPipelineData : public CommonServices::Data::CPackUnpack
+namespace ApplicationData
 {
-public:
-    CPipelineData(std::string pTaskName, char* pThreadData);
-    ~CPipelineData();
-    unsigned int pack(char *pData, size_t pDataLen);
-    char* unpack();
-    
-    std::string     mTaskName;
-    char*           mThreadData;
-    THREAD_STRUCT   *mData;
-    bool            mIsObsolete;
-};
+    namespace PipelineData
+    {
+	class CPipelineData : public CommonServices::Data::CPackUnpack
+	{
+	    public:
+		CPipelineData(std::string pTaskName, char* pThreadData);
+		~CPipelineData();
+		unsigned int pack(char *pData, size_t pDataLen);
+		char* unpack();
+
+		std::string     mTaskName;
+		char*           mThreadData;
+		ApplicationData::ThreadData::THREAD_STRUCT   *mData;
+		bool            mIsObsolete;
+	};
+    }
+}
 #endif /* CPipelineDataClass_hpp */

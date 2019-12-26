@@ -13,6 +13,7 @@
 #include "../CApplicationData.h"
 
 using namespace CommonServices::Logger;
+using namespace ApplicationData::Consumer;
 
 CConsumer::CConsumer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger, 
 		CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
@@ -58,12 +59,13 @@ void CConsumer::run()
         }
 
 	mMutex.lockMutex();
-        CPipelineData *lPipeLineData = (CPipelineData*) m_Pipeline->getQueueData(0);
+        ApplicationData::PipelineData::CPipelineData *lPipeLineData 
+	    = (ApplicationData::PipelineData::CPipelineData*) m_Pipeline->getQueueData(0);
         
         if (lPipeLineData != NULL)
         {
             std::string lTaskName = lPipeLineData->mTaskName;
-            THREAD_STRUCT *msgData = lPipeLineData->mData;
+	    ApplicationData::ThreadData::THREAD_STRUCT *msgData = lPipeLineData->mData;
             if (msgData != NULL)
             {
                 mLogger(INFO) << "Processing data : "<< msgData->lDataId << " by " << this->getTaskName() << " from task : " << lTaskName<< std::endl;

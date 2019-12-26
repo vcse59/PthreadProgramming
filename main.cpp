@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
     for (unsigned int lCounter = 0; lCounter < MAX_CONSUMER_THREAD; ++lCounter)
     {
     	std::string taskName1 = std::string("CConsumer") + std::to_string(lCounter);
-    	CommonServices::Services::Ctask *task1_p = new CConsumer(taskName1, lLogger, &lPipeline, NULL, lMutex);
+    	CommonServices::Services::Ctask *task1_p = new ApplicationData::Consumer::CConsumer(taskName1, lLogger, &lPipeline, NULL, lMutex);
     	unsigned int task1ThreadId = thread_p.addThread(task1_p);
     	thread_p.startThread(task1ThreadId);
     }
@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
     for (unsigned int lCounter = 0; lCounter < MAX_PRODUCER_THREAD; ++lCounter)
     {
     	std::string taskName2 = std::string("CProducer") + std::to_string(lCounter);
-        CommonServices::Services::Ctask *task2_p = new CProducer(taskName2, lLogger, &lPipeline, NULL, lMutex);
+        CommonServices::Services::Ctask *task2_p = new ApplicationData::Producer::CProducer(taskName2, lLogger, &lPipeline, NULL, lMutex);
     	unsigned int task2ThreadId = thread_p.addThread(task2_p);
     	thread_p.startThread(task2ThreadId);
     }
