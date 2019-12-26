@@ -10,7 +10,7 @@
 
 CPipelineData::CPipelineData(std::string pTaskName, char* pThreadData):mTaskName(pTaskName), mThreadData(pThreadData)
 {
-    //std::cout << "CPipelineData constructor" << std::endl;
+    std::cout << "CPipelineData constructor" << std::endl;
     mData = (THREAD_STRUCT*) malloc(sizeof(THREAD_STRUCT));
     memset(mData, 0, sizeof(THREAD_STRUCT));
     mIsObsolete = false;
@@ -18,7 +18,7 @@ CPipelineData::CPipelineData(std::string pTaskName, char* pThreadData):mTaskName
 
 CPipelineData::~CPipelineData()
 {
-    //std::cout << "CPipelineData destructor" << std::endl;
+    std::cout << "CPipelineData destructor" << std::endl;
     if(mData != NULL)
     {
         if(mData->lThreadData != NULL)
@@ -33,17 +33,17 @@ CPipelineData::~CPipelineData()
 
 unsigned int CPipelineData::pack(char *pData, size_t pDataLen)
 {
-    //std::cout << "CPipelineData pack : " << std::endl;
+    std::cout << "CPipelineData pack : " << std::endl;
     mData->lThreadData = new char[pDataLen + 1];
     strncpy(mData->lThreadData, pData, pDataLen);
     mData->lThreadData[pDataLen] = '\0';
     mData->lDataId = rand();
-    //std::cout << "Packing ThreadData from : " << mTaskName << " : " << mData->lThreadData << " with DataID : " << mData->lDataId << std::endl;
+    std::cout << "Packing ThreadData from : " << mTaskName << " : " << mData->lThreadData << " with DataID : " << mData->lDataId << std::endl;
     return mData->lDataId;
 }
 
 char* CPipelineData::unpack()
 {
-    //std::cout << "CPipelineData unpack" << std::endl;
+    std::cout << "CPipelineData unpack" << std::endl;
     return mData->lThreadData;
 }
