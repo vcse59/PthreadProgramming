@@ -10,13 +10,13 @@
 #include <unistd.h>
 #include <fstream>
 #include "DebugThreadClass.h"
-#include "../CommonServices/CQueue.h"
 #include "../AppData/CPipelineDataClass.h"
 #include "../CApplicationData.h"
-#include "../CommonServices/CLogger.h"
 
-DebugThread::DebugThread(std::string pTaskName, CLogger& pLogger, 
-		CQueue *pPipeline, char* pThreadData)
+using namespace CommonServices::Logger;
+
+DebugThread::DebugThread(std::string pTaskName, CommonServices::Logger::CLogger& pLogger, 
+		CommonServices::Container::CQueue *pPipeline, char* pThreadData)
 	: Ctask(pTaskName, pPipeline, pLogger)
 	, mLogger(pLogger), mThreadData(pThreadData)
 {

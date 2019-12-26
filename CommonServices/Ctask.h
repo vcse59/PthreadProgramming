@@ -11,29 +11,34 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "CLogger.h"
+#include "CQueue.h"
 
-class CQueue;
-class CLogger;
-
-class Ctask
+namespace CommonServices
 {
-public:
-    Ctask(std::string pTaskName, CQueue *pPipeline, CLogger &pLogger);
-    virtual ~Ctask();
-    
-    //pure virtual function
-    virtual void run() = 0;
-    virtual void cleanup() = 0;
-    
-    inline std::string getTaskName()
+    namespace Services
     {
-        return m_taskName;
-    }
-    
-protected:
-    CLogger &mLogger;
-    std::string m_taskName;
-    CQueue* m_Pipeline;
-};
+	class Ctask
+	{
+	    public:
+		Ctask(std::string pTaskName, CommonServices::Container::CQueue *pPipeline,
+			CommonServices::Logger::CLogger &pLogger);
+		virtual ~Ctask();
 
+		//pure virtual function
+		virtual void run() = 0;
+		virtual void cleanup() = 0;
+
+		inline std::string getTaskName()
+		{
+		    return m_taskName;
+		}
+
+	    protected:
+		CommonServices::Logger::CLogger &mLogger;
+		std::string m_taskName;
+		CommonServices::Container::CQueue* m_Pipeline;
+	};
+    }
+}
 #endif /* Ctask_hpp */

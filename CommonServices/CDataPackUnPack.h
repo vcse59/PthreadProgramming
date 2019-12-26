@@ -1,5 +1,5 @@
 //
-//  CDataEncodeDecode.hpp
+//  CPackUnpack.h
 //  ThreadProgramming
 //
 //  Created by Vivek Yadav on 2/28/19.
@@ -11,13 +11,18 @@
 
 #include <stdio.h>
 
-class CPackUnpack
+namespace CommonServices
 {
-public:
-    CPackUnpack();
-    virtual ~CPackUnpack();
-    virtual unsigned int pack(char *pData, size_t pDataLen) = 0;
-    virtual char* unpack() = 0;
-};
-
-#endif /* CDataEncodeDecode_hpp */
+    namespace Data
+    {
+	class CPackUnpack
+	{
+	    public:
+		CPackUnpack();
+		virtual ~CPackUnpack();
+		virtual unsigned int pack(char *pData, size_t pDataLen) = 0;
+		virtual char* unpack() = 0;
+	};
+    }
+}
+#endif /* CPackUnpack_h */

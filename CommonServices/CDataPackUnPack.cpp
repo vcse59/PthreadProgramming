@@ -9,6 +9,8 @@
 #include "CDataPackUnPack.h"
 #include <iostream>
 
+using namespace CommonServices::Data;
+
 CPackUnpack::CPackUnpack()
 {
     //std::cout << "CPackUnPack constructor" << std::endl;

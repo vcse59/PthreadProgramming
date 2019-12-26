@@ -11,11 +11,13 @@
 #include "CLogger.h"
 #include "CLogLevel.h"
 
+using namespace CommonServices::Logger;
+
 CLogger::CLogger(LOG_LEVEL_ENUM    pAppLogLevel)
 	:mAppLogLevel(pAppLogLevel)
 {
     this->mDefaultLogLevel  =   DEBUG;
-    mpMutex  = new CMutex();
+    mpMutex  = new Services::CMutex();
 }
 
 CLogger::~CLogger()

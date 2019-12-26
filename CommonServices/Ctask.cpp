@@ -8,9 +8,12 @@
 
 #include <iostream>
 #include "Ctask.h"
-#include "CLogger.h"
 
-Ctask::Ctask(std::string pTaskName, CQueue *pPipeline, CLogger &pLogger)
+using namespace CommonServices::Services;
+using namespace CommonServices::Logger;
+
+Ctask::Ctask(std::string pTaskName, CommonServices::Container::CQueue *pPipeline, 
+	CommonServices::Logger::CLogger &pLogger)
     :mLogger(pLogger), m_taskName(pTaskName), m_Pipeline(pPipeline)
 {
     mLogger(DEBUG) << "Entering Ctask::constructor initialised by " << m_taskName << std::endl;

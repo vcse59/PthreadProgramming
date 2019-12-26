@@ -9,23 +9,25 @@
 #include <iostream>
 #include <string>
 #include "CLinkList.h"
-#include "CMutex.h"
-#include "CNode.h"
+#include "CommonDefs.h"
 #include "CLogger.h"
 
+using namespace CommonServices::Container;
+using namespace CommonServices::Logger;
+
 //Contructor declaration
-CLinkList::CLinkList(CLogger &pLogger)
+CommonServices::Container::CLinkList::CLinkList(CommonServices::Logger::CLogger &pLogger)
 	:mLogger(pLogger)
 {
     mLogger(DEBUG) << "Entering CLinkList constructor" << std::endl;
     mListHeader = nullptr;
     mIndex = NOT_INITIALIZED;
-    mpMutex  =  new CMutex();
+    mpMutex  =  new CommonServices::Services::CMutex();
     mLogger(DEBUG) << "Exiting CLinkList constructor" << std::endl;
 }
 
 //Destructor declaration
-CLinkList::~CLinkList()
+CommonServices::Container::CLinkList::~CLinkList()
 {
     mLogger(DEBUG) << "Entering CLinkList destructor" << std::endl;
     this->deleteAll();
@@ -38,11 +40,11 @@ CLinkList::~CLinkList()
 }
 
 // Returns Link list length
-unsigned int CLinkList::length()
+unsigned int CommonServices::Container::CLinkList::length()
 {
     mLogger(DEBUG) << "Entering CLinkList::length" << std::endl;
     unsigned int lCount = 0;
-    CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
     
     while (lListHeader != nullptr)
     {
@@ -54,16 +56,16 @@ unsigned int CLinkList::length()
 }
 
 // Insert the node
-unsigned int CLinkList::insertNodeAtEnd(void* pData)
+unsigned int CommonServices::Container::CLinkList::insertNodeAtEnd(void* pData)
 {
     mLogger(DEBUG) << "Entering CLinkList::insertNodeAtEnd" << std::endl;
     NULLCHECK(pData, false);
     unsigned int lCount = 0;
-    CNode *lListHeader = mListHeader;
-    CNode *lLastNode = nullptr;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lLastNode = nullptr;
     
     //Allocate the memory to new node
-    CNode *node = new CNode(pData);
+    CommonServices::Data::CNode *node = new CommonServices::Data::CNode(pData);
     node->setNextNodeAddress(nullptr);
     node->setNodeID(mIndex++);
     
@@ -91,15 +93,15 @@ unsigned int CLinkList::insertNodeAtEnd(void* pData)
 }
 
 // Insert the node at the start
-unsigned int CLinkList::insertNodeAtStart(void* pData)
+unsigned int CommonServices::Container::CLinkList::insertNodeAtStart(void* pData)
 {
     mLogger(DEBUG) << "Entering CLinkList::insertNodeAtStart" << std::endl;
     NULLCHECK(pData, false);
     unsigned int lCount = 0;
-    CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
     
     //Allocate the memory to new node
-    CNode *node = new CNode(pData);
+    CommonServices::Data::CNode *node = new CommonServices::Data::CNode(pData);
     node->setNextNodeAddress(nullptr);
     node->setNodeID(++mIndex);
     
@@ -126,11 +128,11 @@ unsigned int CLinkList::insertNodeAtStart(void* pData)
 }
 
 // Delete the node from start
-bool CLinkList::deleteNodeFromStart()
+bool CommonServices::Container::CLinkList::deleteNodeFromStart()
 {
     mLogger(DEBUG) << "Entering CLinkList::deleteNodeFromStart" << std::endl;
-    CNode *lListHeader = mListHeader;
-    CNode *nextNode    = mListHeader->getNextNodeAddress();
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *nextNode    = mListHeader->getNextNodeAddress();
     this->mpMutex->lock();
     mListHeader = nextNode;
     delete lListHeader;
@@ -140,11 +142,11 @@ bool CLinkList::deleteNodeFromStart()
 }
 
 // Delete the node from end
-bool CLinkList::deleteNodeFromEnd()
+bool CommonServices::Container::CLinkList::deleteNodeFromEnd()
 {
     mLogger(DEBUG) << "Entering CLinkList::deleteNodeFromEnd" << std::endl;
-    CNode *lListHeader = mListHeader;
-    CNode *lprevNode = lListHeader;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lprevNode = lListHeader;
     
     // In case LinkList container is empty
     if(lListHeader == nullptr)
@@ -177,16 +179,16 @@ bool CLinkList::deleteNodeFromEnd()
 }
 
 // Delete the node by node value
-bool CLinkList::deleteNode(unsigned int pNodeID)
+bool CommonServices::Container::CLinkList::deleteNode(unsigned int pNodeID)
 {
     mLogger(DEBUG) << "Entering CLinkList::deleteNode" << std::endl;
-    CNode *lListHeader = mListHeader;
-    CNode *prevNode    = lListHeader;
-    CNode *nextNode    = nullptr;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *prevNode    = lListHeader;
+    CommonServices::Data::CNode *nextNode    = nullptr;
     
     while (lListHeader != nullptr)
     {
-        CNode *lNodeData = (CNode*)lListHeader;
+        CommonServices::Data::CNode *lNodeData = (CommonServices::Data::CNode*)lListHeader;
         
         if (lNodeData->getNodeID() == pNodeID)
         {
@@ -215,11 +217,11 @@ bool CLinkList::deleteNode(unsigned int pNodeID)
 }
 
 // Empty the complete list
-void CLinkList::deleteAll()
+void CommonServices::Container::CLinkList::deleteAll()
 {
     mLogger(DEBUG) << "Entering CLinkList::deleteAll" << std::endl;
-    CNode *lListHeader = mListHeader;
-    CNode *nextNode    = nullptr;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *nextNode    = nullptr;
     
     while (lListHeader != nullptr)
     {
@@ -236,17 +238,17 @@ void CLinkList::deleteAll()
 }
 
 //print all Link List data
-std::string CLinkList::printData()
+std::string CommonServices::Container::CLinkList::printData()
 {
     mLogger(DEBUG) << "Entering CLinkList::printData" << std::endl;
-    CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
     unsigned int lCount = 0;
     std::string lPrintPrefix = "Link List contents are : ";
     std::string lItemString = "\n";
     while (lListHeader != nullptr)
     {
         lCount++;
-        CNode *lNodeData = (CNode *)lListHeader;
+        CommonServices::Data::CNode *lNodeData = (CommonServices::Data::CNode *)lListHeader;
         lItemString += "Item " + std::to_string(lCount) + " : " + std::to_string(lNodeData->getNodeID()) + "\n";
         lListHeader = lListHeader->getNextNodeAddress();
     }
@@ -260,13 +262,13 @@ std::string CLinkList::printData()
 }
 
 // Reverse the linked list
-bool CLinkList::reverse()
+bool CommonServices::Container::CLinkList::reverse()
 {
     mLogger(DEBUG) << "Entering CLinkList::reverse" << std::endl;
-    CNode *lLinkListHeader = mListHeader;
-    CNode *lReverseList = nullptr;
-    CNode *lTempNode = nullptr;
-    CNode *lNextNode = nullptr;
+    CommonServices::Data::CNode *lLinkListHeader = mListHeader;
+    CommonServices::Data::CNode *lReverseList = nullptr;
+    CommonServices::Data::CNode *lTempNode = nullptr;
+    CommonServices::Data::CNode *lNextNode = nullptr;
     
     while (lLinkListHeader != nullptr)
     {
@@ -292,15 +294,15 @@ bool CLinkList::reverse()
 }
 
 // Fetch the node by node ID
-void * CLinkList::fetchNode(unsigned int pNodeID)
+void * CommonServices::Container::CLinkList::fetchNode(unsigned int pNodeID)
 {
     mLogger(DEBUG) << "Entering CLinkList::fetchNode" << std::endl;
-    CNode *lListHeader = mListHeader;
-    CNode *lNodeData = nullptr;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lNodeData = nullptr;
     
     while (lListHeader != nullptr)
     {
-        lNodeData = (CNode*)lListHeader;
+        lNodeData = (CommonServices::Data::CNode*)lListHeader;
         
         if (lNodeData->getNodeID() == pNodeID)
         {
@@ -313,12 +315,12 @@ void * CLinkList::fetchNode(unsigned int pNodeID)
 }
 
 // Overloading subscript operator
-void * CLinkList::getDataByIndex(const unsigned int pIndex)
+void * CommonServices::Container::CLinkList::getDataByIndex(const unsigned int pIndex)
 {
     mLogger(DEBUG) << "Entering CLinkList::getDataByIndex" << std::endl;
     unsigned int lCount = 0;
-    CNode *lListHeader = mListHeader;
-    CNode *lNodeData = nullptr;
+    CommonServices::Data::CNode *lListHeader = mListHeader;
+    CommonServices::Data::CNode *lNodeData = nullptr;
     
     
     while (lListHeader != nullptr)
@@ -339,7 +341,7 @@ void * CLinkList::getDataByIndex(const unsigned int pIndex)
 }
 
 // Fetch first node
-void* CLinkList::begin()
+void* CommonServices::Container::CLinkList::begin()
 {
     mLogger(DEBUG) << "Entering CLinkList::begin" << std::endl;
     mLogger(DEBUG) << "Exiting CLinkList::begin" << std::endl;
@@ -347,7 +349,7 @@ void* CLinkList::begin()
 }
 
 // Fetch end node
-void* CLinkList::end()
+void* CommonServices::Container::CLinkList::end()
 {
     mLogger(DEBUG) << "Entering CLinkList::end" << std::endl;
     mLogger(DEBUG) << "Exiting CLinkList::end" << std::endl;

@@ -14,7 +14,7 @@
 #include "../CommonServices/CDataPackUnPack.h"
 #include "../CApplicationData.h"
 
-class CPipelineData : public CPackUnpack
+class CPipelineData : public CommonServices::Data::CPackUnpack
 {
 public:
     CPipelineData(std::string pTaskName, char* pThreadData);

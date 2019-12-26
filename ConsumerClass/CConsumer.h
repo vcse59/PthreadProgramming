@@ -12,24 +12,24 @@
 #include <stdio.h>
 #include "../CommonServices/Ctask.h"
 #include "../CommonServices/CMutex.h"
+#include "../CommonServices/CQueue.h"
+#include "../CommonServices/CLogger.h"
 
-class CQueue;
-class CLogger;
-
-class CConsumer : public Ctask
+class CConsumer : public CommonServices::Services::Ctask
 {
 public:
-    CConsumer(std::string pTaskName, CLogger& pLogger,
-		    CQueue *pPipeline, char* pThreadData, CMutex &pMutex);
+    CConsumer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger,
+		    CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
+		    CommonServices::Services::CMutex &pMutex);
     ~CConsumer();
     
     void run();
     void cleanup();
     
 private:
-    CLogger& mLogger;
+    CommonServices::Logger::CLogger& mLogger;
     char *mThreadData;
-    CMutex &mMutex;
+    CommonServices::Services::CMutex &mMutex;
 };
 
 #endif /* CConsumer_h */

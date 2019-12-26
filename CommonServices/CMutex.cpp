@@ -9,6 +9,8 @@
 #include <iostream>
 #include "CMutex.h"
 
+using namespace CommonServices::Services;
+
 CMutex::CMutex() 
 {
 }

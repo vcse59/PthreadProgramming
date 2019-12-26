@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include "CLogLevel.h"
 
+using namespace CommonServices::Logger;
+
 std::string LOG_LEVEL_STRING[] = {
     "ERROR",
     "WARNING",

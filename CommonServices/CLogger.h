@@ -23,23 +23,29 @@
     mpMutex->unLockMutex();	\
     return lOStream;
 
-class CLogger
+namespace CommonServices
 {
-public:
+    namespace Logger
+    {
+	class CLogger
+	{
+	    public:
 
-    CLogger(LOG_LEVEL_ENUM    pAppLogLevel = DEBUG);
-    ~CLogger();
-    
-    std::ostream& operator<<(const char *pLogMessageStream);
-    std::ostream& operator<<(std::string pLogMessageStream);
-    std::ostream& operator<<(unsigned int pLogMessageStream);
-    CLogger& operator()(LOG_LEVEL_ENUM pLogLevel = INFO);
+		CLogger(CommonServices::Logger::LOG_LEVEL_ENUM    pAppLogLevel = DEBUG);
+		~CLogger();
 
-protected:
-    LOG_LEVEL_ENUM  mDefaultLogLevel;
-    std::string getCurrentDateTime();
-    CLogLevel	mLogLevel;
-    CMutex*     mpMutex;
-    LOG_LEVEL_ENUM  mAppLogLevel;
-};
+		std::ostream& operator<<(const char *pLogMessageStream);
+		std::ostream& operator<<(std::string pLogMessageStream);
+		std::ostream& operator<<(unsigned int pLogMessageStream);
+		CLogger& operator()(CommonServices::Logger::LOG_LEVEL_ENUM pLogLevel = INFO);
+
+	    protected:
+		CommonServices::Logger::LOG_LEVEL_ENUM  mDefaultLogLevel;
+		std::string getCurrentDateTime();
+		CommonServices::Logger::CLogLevel	mLogLevel;
+		CommonServices::Services::CMutex*     mpMutex;
+		CommonServices::Logger::LOG_LEVEL_ENUM  mAppLogLevel;
+	};
+    }
+}
 #endif /* CLogger_h */

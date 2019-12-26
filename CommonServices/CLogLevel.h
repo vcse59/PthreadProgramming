@@ -12,18 +12,24 @@
 #include <stdio.h>
 #include <string>
 
-enum LOG_LEVEL_ENUM
+namespace CommonServices
 {
-    NONE     =   -1,
-    ERROR    =   NONE      +   1,
-    WARNING  =   ERROR     +   1,
-    INFO     =   WARNING   +   1,
-    DEBUG    =   INFO      +   1
-};
+    namespace Logger
+    {
+	enum LOG_LEVEL_ENUM
+	{
+	    NONE     =   -1,
+	    ERROR    =   NONE      +   1,
+	    WARNING  =   ERROR     +   1,
+	    INFO     =   WARNING   +   1,
+	    DEBUG    =   INFO      +   1
+	};
 
-class CLogLevel
-{
-    public:
-        std::string getLogLevelString(LOG_LEVEL_ENUM pLogLevel);
-};
+	class CLogLevel
+	{
+	    public:
+		std::string getLogLevelString(CommonServices::Logger::LOG_LEVEL_ENUM pLogLevel);
+	};
+    }
+}
 #endif /* CLogLevel_h */

@@ -6,16 +6,16 @@
 //  Copyright © 2018 Vivek Yadav. All rights reserved.
 //
 
-#include "CProducer.h"
 #include <iostream>
 #include <unistd.h>
-#include "../CommonServices/CQueue.h"
+#include "CProducer.h"
 #include "../AppData/CPipelineDataClass.h"
-#include "../CommonServices/CLogLevel.h"
-#include "../CommonServices/CLogger.h"
 
-CProducer::CProducer(std::string pTaskName, CLogger& pLogger, 
-		CQueue *pPipeline, char* pThreadData, CMutex &pMutex)
+using namespace CommonServices::Logger;
+
+CProducer::CProducer(std::string pTaskName, CommonServices::Logger::CLogger& pLogger, 
+		CommonServices::Container::CQueue *pPipeline, char* pThreadData, 
+		CommonServices::Services::CMutex &pMutex)
         : Ctask(pTaskName, pPipeline, pLogger), mLogger(pLogger), mThreadData(pThreadData),
 	mMutex(pMutex)
 {

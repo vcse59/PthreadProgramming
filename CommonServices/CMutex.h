@@ -12,13 +12,19 @@
 #include <stdio.h>
 #include <mutex>
 
-class CMutex : public std::mutex
+namespace CommonServices
 {
-public:
-    CMutex();
-    ~CMutex();
-    
-    void lockMutex();
-    void unLockMutex();
-};
+    namespace Services
+    {
+	class CMutex : public std::mutex
+	{
+	    public:
+		CMutex();
+		~CMutex();
+
+		void lockMutex();
+		void unLockMutex();
+	};
+    }
+}
 #endif /* CMutex_h */

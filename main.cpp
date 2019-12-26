@@ -18,29 +18,30 @@
 #include "CommonServices/CMutex.h"
 #include "CommonServices/CLogger.h"
 #include "CommonServices/CLogLevel.h"
+#include "CommonServices/CommonDefs.h"
 
-#define MAX_CONSUMER_THREAD  2
-#define MAX_PRODUCER_THREAD  20
+#define MAX_CONSUMER_THREAD  20
+#define MAX_PRODUCER_THREAD  10
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     // Instantiating pipeline
 
-    CLogger lLogger(NONE);
-    Cthread thread_p(lLogger);
-    CQueue lPipeline(lLogger);
-    CMutex lMutex;
+    CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
+    CommonServices::Services::Cthread thread_p(lLogger);
+    CommonServices::Container::CQueue lPipeline(lLogger);
+    CommonServices::Services::CMutex lMutex;
 
-    lLogger(INFO) << "Main program entry" << std::endl;
+    lLogger(CommonServices::Logger::INFO) << "Main program entry" << std::endl;
 
-    Ctask *debugThread_p =  new DebugThread("DebugThread", lLogger, &lPipeline, NULL);
+    CommonServices::Services::Ctask *debugThread_p =  new DebugThread("DebugThread", lLogger, &lPipeline, NULL);
     unsigned int DebugThreadId = thread_p.addThread(debugThread_p);
     thread_p.startThread(DebugThreadId);
     
     for (unsigned int lCounter = 0; lCounter < MAX_CONSUMER_THREAD; ++lCounter)
     {
     	std::string taskName1 = std::string("CConsumer") + std::to_string(lCounter);
-    	Ctask *task1_p = new CConsumer(taskName1, lLogger, &lPipeline, NULL, lMutex);
+    	CommonServices::Services::Ctask *task1_p = new CConsumer(taskName1, lLogger, &lPipeline, NULL, lMutex);
     	unsigned int task1ThreadId = thread_p.addThread(task1_p);
     	thread_p.startThread(task1ThreadId);
     }
@@ -48,7 +49,7 @@ int main(int argc, const char * argv[]) {
     for (unsigned int lCounter = 0; lCounter < MAX_PRODUCER_THREAD; ++lCounter)
     {
     	std::string taskName2 = std::string("CProducer") + std::to_string(lCounter);
-        Ctask *task2_p = new CProducer(taskName2, lLogger, &lPipeline, NULL, lMutex);
+        CommonServices::Services::Ctask *task2_p = new CProducer(taskName2, lLogger, &lPipeline, NULL, lMutex);
     	unsigned int task2ThreadId = thread_p.addThread(task2_p);
     	thread_p.startThread(task2ThreadId);
     }

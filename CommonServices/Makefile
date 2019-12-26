@@ -11,8 +11,6 @@ CNode.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CNode.cpp -o CNode.o
 Cthread.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c Cthread.cpp -o Cthread.o
-CQueue.o:
-	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CQueue.cpp -o CQueue.o
 Ctask.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c Ctask.cpp -o Ctask.o
 CDataPackUnPack.o:
@@ -23,5 +21,7 @@ CMutex.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CMutex.cpp -o CMutex.o
 CLogLevel.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CLogLevel.cpp -o CLogLevel.o
+CQueue.o:
+	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CQueue.cpp -o CQueue.o
 clean:
 	rm -f *.o

@@ -7,18 +7,19 @@
 //
 #include <unistd.h>
 #include <cstring>
-#include "../AppData/CPipelineDataClass.h"
 #include "CQueue.h"
-#include "CMutex.h"
-#include "CLinkList.h"
 #include "CLogger.h"
+#include "CommonDefs.h"
 
-CQueue::CQueue(CLogger& pLogger)
+using namespace CommonServices::Container;
+using namespace CommonServices::Logger;
+
+CQueue::CQueue(CommonServices::Logger::CLogger& pLogger)
 	:mLogger(pLogger)
 {
     mLogger(DEBUG) << "Entering CQueue constructor" << std::endl;
     mStopFlag = false;
-    mpMutex  =  new CMutex();
+    mpMutex  =  new CommonServices::Services::CMutex();
     mpMutex->lockMutex();
     dQueueContainer = new CLinkList(pLogger);
     mpMutex->unLockMutex();
@@ -35,7 +36,8 @@ CQueue::~CQueue()
     unsigned int lContainerLength = dQueueContainer->length();
     for( ; lCount < lContainerLength; lCount++)
     {
-        dataContext_t *lDataContext_p = (dataContext_t*)(dQueueContainer->getDataByIndex(lCount));
+	CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	    = (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->getDataByIndex(lCount));
         CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
      
         mpMutex->lockMutex();
@@ -80,8 +82,9 @@ void CQueue::push_front(CPipelineData* pData, unsigned int pDataId)
 {
     mLogger(DEBUG) << "Entering CQueue::push_front" << std::endl;
     // Allocate and initialize memory of dataContext_t size
-    dataContext_t *lDataContext_p = (dataContext_t *)malloc(sizeof(dataContext_t));
-    memset((void*)lDataContext_p, 0 , sizeof(dataContext_t));
+    CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	= (CommonServices::CommonDefinitions::dataContext_t *)malloc(sizeof(CommonServices::CommonDefinitions::dataContext_t));
+    memset((void*)lDataContext_p, 0 , sizeof(CommonServices::CommonDefinitions::dataContext_t));
     
     if (lDataContext_p ==  NULL)
     {
@@ -100,8 +103,9 @@ void CQueue::push_back(CPipelineData* pData, unsigned int pDataId)
 {
     mLogger(DEBUG) << "Entering CQueue::push_back" << std::endl;
     // Allocate and initialize memory of dataContext_t size
-    dataContext_t *lDataContext_p = (dataContext_t *)malloc(sizeof(dataContext_t));
-    memset((void*)lDataContext_p, 0 , sizeof(dataContext_t));
+    CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	= (CommonServices::CommonDefinitions::dataContext_t *)malloc(sizeof(CommonServices::CommonDefinitions::dataContext_t));
+    memset((void*)lDataContext_p, 0 , sizeof(CommonServices::CommonDefinitions::dataContext_t));
     
     if (lDataContext_p ==  NULL)
     {
@@ -125,7 +129,8 @@ void CQueue::erase(unsigned int pDataId)
     for( ; lCount < lThreadCount; lCount++)
     {
         dQueueContainer->printData();
-        dataContext_t *lDataContext_p = (dataContext_t*)(dQueueContainer->getDataByIndex(lCount));
+        CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	    = (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->getDataByIndex(lCount));
         if(lDataContext_p->dataId == pDataId)
         {
 	    mpMutex->lockMutex();
@@ -157,7 +162,8 @@ void CQueue::pop_front()
     }
     
     mLogger(INFO) << "CQueue::pop_front Queue length : " << dQueueContainer->length() << std::endl;
-    dataContext_t *lDataContext_p = (dataContext_t*)(dQueueContainer->begin());
+    CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->begin());
     CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
     
     mpMutex->lockMutex();
@@ -183,7 +189,8 @@ void CQueue::pop_back()
         return;
     }
     
-    dataContext_t *lDataContext_p = (dataContext_t*)(dQueueContainer->end());
+    CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->end());
     CPipelineData *lPipeLineData = (CPipelineData*)(lDataContext_p->data);
     
     mpMutex->lockMutex();
@@ -202,7 +209,8 @@ void CQueue::pop_back()
 CPipelineData* CQueue::getQueueData(unsigned int pIndex)
 {
     mLogger(DEBUG) << "Entering CQueue::getQueueData" << std::endl;
-    dataContext_t *lDataContext_p = (dataContext_t*)(dQueueContainer->getDataByIndex(pIndex));
+    CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
+	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->getDataByIndex(pIndex));
     
     if (lDataContext_p == NULL)
         return NULL;

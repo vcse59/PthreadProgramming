@@ -12,6 +12,10 @@
 #include "CMutex.h"
 #include <iostream>
 
+using namespace CommonServices::Data;
+using namespace CommonServices::CommonDefinitions;
+using namespace CommonServices::Services;
+
 CNode::CNode(void* pData)
 :mDataItem(pData), mNodePtr(nullptr)
 {

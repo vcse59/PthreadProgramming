@@ -9,20 +9,26 @@
 #ifndef Node_h
 #define Node_h
 
-class CNode
+namespace CommonServices
 {
-public:
-    CNode(void* pData);
-    ~CNode();
-    void* getValue();
-    void setNextNodeAddress(CNode *);
-    CNode* getNextNodeAddress();
-    void setNodeID(unsigned int pNodeId);
-    unsigned int getNodeID();
-    
-private:
-    void  *mDataItem;
-    CNode *mNodePtr;
-    unsigned int mNodeId;
-};
+    namespace Data
+    {
+	class CNode
+	{
+	    public:
+		CNode(void* pData);
+		~CNode();
+		void* getValue();
+		void setNextNodeAddress(CNode *);
+		CNode* getNextNodeAddress();
+		void setNodeID(unsigned int pNodeId);
+		unsigned int getNodeID();
+
+	    private:
+		void  *mDataItem;
+		CommonServices::Data::CNode *mNodePtr;
+		unsigned int mNodeId;
+	};
+    }
+}
 #endif /* Node_h */
