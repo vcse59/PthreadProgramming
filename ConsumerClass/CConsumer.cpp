@@ -60,7 +60,7 @@ void CConsumer::run()
 
 	mMutex.lockMutex();
         ApplicationData::PipelineData::CPipelineData *lPipeLineData 
-	    = (ApplicationData::PipelineData::CPipelineData*) m_Pipeline->getQueueData(0);
+	    = (ApplicationData::PipelineData::CPipelineData*) m_Pipeline->pop_front();
         
         if (lPipeLineData != NULL)
         {
@@ -70,7 +70,9 @@ void CConsumer::run()
             {
                 mLogger(INFO) << "Processing data : "<< msgData->lDataId << " by " << this->getTaskName() << " from task : " << lTaskName<< std::endl;
             }
-            m_Pipeline->pop_front();
+
+	    delete lPipeLineData;
+	    lPipeLineData = NULL;
         }
         else
         {

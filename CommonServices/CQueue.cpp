@@ -38,15 +38,8 @@ CQueue::~CQueue()
     {
 	CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
 	    = (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->getDataByIndex(lCount));
-        ApplicationData::PipelineData::CPipelineData *lPipeLineData = 
-	    (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
      
         mpMutex->lockMutex();
-        if(lPipeLineData != NULL)
-        {
-            delete lPipeLineData;
-        }
-        lPipeLineData = NULL;
         free(lDataContext_p);
         lDataContext_p = NULL;
         mpMutex->unLockMutex();
@@ -79,7 +72,7 @@ unsigned int CQueue::size()
     mLogger(DEBUG) << "Exiting CQueue::size" << std::endl;
 }
 
-void CQueue::push_front(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId)
+void CQueue::push_front(char* pData, unsigned int pDataId)
 {
     mLogger(DEBUG) << "Entering CQueue::push_front" << std::endl;
     // Allocate and initialize memory of dataContext_t size
@@ -92,7 +85,7 @@ void CQueue::push_front(ApplicationData::PipelineData::CPipelineData* pData, uns
         mLogger(ERROR) << "CQueue::push_front Malloc failure : dataContext_p" << std::endl;
         return;
     }
-    lDataContext_p->data = (char*)pData;
+    lDataContext_p->data = pData;
     lDataContext_p->dataId = pDataId;
     mpMutex->lockMutex();
     dQueueContainer->insertNodeAtStart((void*) lDataContext_p);
@@ -100,7 +93,7 @@ void CQueue::push_front(ApplicationData::PipelineData::CPipelineData* pData, uns
     mLogger(DEBUG) << "Exiting CQueue::push_front" << std::endl;
 }
 
-void CQueue::push_back(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId)
+void CQueue::push_back(char* pData, unsigned int pDataId)
 {
     mLogger(DEBUG) << "Entering CQueue::push_back" << std::endl;
     // Allocate and initialize memory of dataContext_t size
@@ -113,7 +106,7 @@ void CQueue::push_back(ApplicationData::PipelineData::CPipelineData* pData, unsi
         std::cerr << "CQueue:push_back Malloc failure : dataContext_p" << std::endl;
         return;
     }
-    lDataContext_p->data = (char*)pData;
+    lDataContext_p->data = pData;
     lDataContext_p->dataId = pDataId;
     mpMutex->lockMutex();
     dQueueContainer->insertNodeAtEnd((void*) lDataContext_p);
@@ -154,72 +147,53 @@ void CQueue::erase(unsigned int pDataId)
     mLogger(DEBUG) << "Exiting CQueue::erase" << std::endl;
 }
 
-void CQueue::pop_front()
+char* CQueue::pop_front()
 {
     mLogger(DEBUG) << "Entering CQueue::pop_front" << std::endl;
     if(dQueueContainer->length() <= 0)
     {
         mLogger(ERROR) << "CQeueu:pop_front Queue container is empty" << std::endl;
-        return;
+        return NULL;
     }
     
     mLogger(INFO) << "CQueue::pop_front Queue length : " << dQueueContainer->length() << std::endl;
     CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
 	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->begin());
-    ApplicationData::PipelineData::CPipelineData *lPipeLineData 
-	= (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
-    
+
+    char *lData_p = lDataContext_p->data;
+
     mpMutex->lockMutex();
-    if(lPipeLineData != NULL)
-    {
-        delete lPipeLineData;
-    }
-    
-    lPipeLineData = NULL;
+    lDataContext_p->data = NULL;
     free(lDataContext_p);
     lDataContext_p = NULL;
     dQueueContainer->deleteNodeFromStart();
     mpMutex->unLockMutex();
     mLogger(DEBUG) << "Exiting CQueue::pop_front" << std::endl;
+    return lData_p;
 }
 
-void CQueue::pop_back()
+char* CQueue::pop_back()
 {
     mLogger(DEBUG) << "Entering CQueue::pop_back" << std::endl;
     if(dQueueContainer->length() <= 0)
     {
         mLogger(ERROR) << "CQeueue::pop_back Queue container is empty" << std::endl;
-        return;
+        return NULL;
     }
     
     CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
 	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->end());
-    ApplicationData::PipelineData::CPipelineData *lPipeLineData 
-	= (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
     
+    char *lData_p = lDataContext_p->data;
+
     mpMutex->lockMutex();
-    if(lPipeLineData != NULL)
-    {
-        delete lPipeLineData;
-    }
-    lPipeLineData = NULL;
+    lDataContext_p->data = NULL;
     free(lDataContext_p);
     lDataContext_p = NULL;
     dQueueContainer->deleteNodeFromStart();
     mpMutex->unLockMutex();
     mLogger(DEBUG) << "Exiting CQueue::pop_back" << std::endl;
-}
-
-ApplicationData::PipelineData::CPipelineData* CQueue::getQueueData(unsigned int pIndex)
-{
-    mLogger(DEBUG) << "Entering CQueue::getQueueData" << std::endl;
-    CommonServices::CommonDefinitions::dataContext_t *lDataContext_p 
-	= (CommonServices::CommonDefinitions::dataContext_t*)(dQueueContainer->getDataByIndex(pIndex));
-    
-    if (lDataContext_p == NULL)
-        return NULL;
-    mLogger(DEBUG) << "Exiting CQueue::getQueueData" << std::endl;
-    return (ApplicationData::PipelineData::CPipelineData*)(lDataContext_p->data);
+    return lData_p;
 }
 
 void CQueue::setExecutionFlag(bool isStop)

@@ -51,7 +51,7 @@ void CProducer::run()
 	    = new ApplicationData::PipelineData::CPipelineData(this->getTaskName(), mThreadData);
         unsigned int lDataId = lPipeLineData->pack((char*)(this->getTaskName().c_str()), strlen("TASK"));
 	mMutex.lockMutex();
-        m_Pipeline->push_back(lPipeLineData, lDataId);
+        m_Pipeline->push_back((char*)lPipeLineData, lDataId);
 	mMutex.unLockMutex();
 	//sleep(1);
     }

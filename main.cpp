@@ -23,14 +23,14 @@
 #include "CommonServices/CBinarySearchTree.h"
 
 #define MAX_CONSUMER_THREAD  60
-#define MAX_PRODUCER_THREAD  30
+#define MAX_PRODUCER_THREAD  50
 
 int main(int argc, const char * argv[]) {
 
 /*****************************************************************************Thread pipeline implentation**************************************/
     // Instantiating pipeline
 
-    /*
+    
     CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
     CommonServices::Services::Cthread thread_p(lLogger);
     CommonServices::Container::CQueue lPipeline(lLogger);
@@ -59,11 +59,12 @@ int main(int argc, const char * argv[]) {
     }
     
     thread_p.join();
-    */
+    
 /***********************************************************************************************************************************************/
 
 
 /******************************************************Binary search tree implementation********************************************************/
+    /*
     CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
     CommonServices::Services::CBinarySearchTree* bstTreeObj = new CommonServices::Services::CBinarySearchTree(lLogger);
 
@@ -110,6 +111,7 @@ int main(int argc, const char * argv[]) {
     }
     
     bstTreeObj = nullptr;
+    */
 /**********************************************************************************************************************************************/
     return 0;
 }

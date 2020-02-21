@@ -29,17 +29,15 @@ namespace CommonServices
 
 		unsigned int size();
 
-		void push_front(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId);
+		void push_front(char* pData, unsigned int pDataId);
 
-		void push_back(ApplicationData::PipelineData::CPipelineData* pData, unsigned int pDataId);
+		void push_back(char* pData, unsigned int pDataId);
 
 		void erase(unsigned dataId);
 
-		ApplicationData::PipelineData::CPipelineData* getQueueData(unsigned int pIndex);
+		char* pop_front();
 
-		void pop_front();
-
-		void pop_back();
+		char* pop_back();
 
 		void setExecutionFlag(bool isStop);
 
