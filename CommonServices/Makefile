@@ -3,7 +3,7 @@ INCLUDE = -I./
 
 all: CCommonServices
 
-CCommonServices: CLinkList.o CNode.o Cthread.o CQueue.o Ctask.o CDataPackUnPack.o CLogger.o CMutex.o CLogLevel.o CBinarySearchTree.o CTreeNode.o
+CCommonServices: CLinkList.o CNode.o Cthread.o CQueue.o Ctask.o CDataPackUnPack.o CLogger.o CMutex.o CLogLevel.o CBinarySearchTree.o CTreeNode.o CStack.o
 
 CLinkList.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CLinkList.cpp -o CLinkList.o
@@ -27,5 +27,7 @@ CBinarySearchTree.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CBinarySearchTree.cpp -o CBinarySearchTree.o
 CTreeNode.o:
 	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CTreeNode.cpp -o CTreeNode.o
+CStack.o:
+	$(CC) $(CFLAGS) $(INCLUDE) $(TESTFLAG) -c CStack.cpp -o CStack.o
 clean:
 	rm -f *.o

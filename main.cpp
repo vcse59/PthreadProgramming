@@ -21,22 +21,23 @@
 #include "CommonServices/CommonDefs.h"
 #include "CommonServices/CTreeNode.h"
 #include "CommonServices/CBinarySearchTree.h"
+#include "CommonServices/CStack.h"
 
-#define MAX_CONSUMER_THREAD  60
-#define MAX_PRODUCER_THREAD  50
+#define MAX_CONSUMER_THREAD  5
+#define MAX_PRODUCER_THREAD  10
 
 int main(int argc, const char * argv[]) {
 
 /*****************************************************************************Thread pipeline implentation**************************************/
     // Instantiating pipeline
 
-    
+    /*
     CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
     CommonServices::Services::Cthread thread_p(lLogger);
     CommonServices::Container::CQueue lPipeline(lLogger);
     CommonServices::Services::CMutex lMutex;
 
-    lLogger(CommonServices::Logger::INFO) << "Main program entry" << std::endl;
+    lLogger(CommonServices::Logger::INFO_LOG) << "Main program entry" << std::endl;
 
     CommonServices::Services::Ctask *debugThread_p =  new DebugThread("DebugThread", lLogger, &lPipeline, NULL);
     unsigned int DebugThreadId = thread_p.addThread(debugThread_p);
@@ -59,50 +60,63 @@ int main(int argc, const char * argv[]) {
     }
     
     thread_p.join();
+    */
     
 /***********************************************************************************************************************************************/
 
 
 /******************************************************Binary search tree implementation********************************************************/
-    /*
+
     CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
     CommonServices::Services::CBinarySearchTree* bstTreeObj = new CommonServices::Services::CBinarySearchTree(lLogger);
 
-    unsigned int num1 = 21;
+    unsigned int num1 = 91;
     CommonServices::Data::CTreeNode data1((void*)&num1);
     bstTreeObj->insertData(&data1, num1);
 
-    unsigned int num2 = 45;
+    unsigned int num2 = 25;
     CommonServices::Data::CTreeNode data2((void*)&num2);
     bstTreeObj->insertData(&data2, num2);
 
-    unsigned int num3 = 12;
+    unsigned int num3 = 35;
     CommonServices::Data::CTreeNode data3((void*)&num3);
     bstTreeObj->insertData(&data3, num3);
 
-    unsigned int num4 = 5;
+    unsigned int num4 = 67;
     CommonServices::Data::CTreeNode data4((void*)&num4);
     bstTreeObj->insertData(&data4, num4);
 
-    unsigned int num5 = 99;
+    unsigned int num5 = 2;
     CommonServices::Data::CTreeNode data5((void*)&num5);
     bstTreeObj->insertData(&data5, num5);
 
-    unsigned int num6 = 34;
+    unsigned int num6 = 54;
     CommonServices::Data::CTreeNode data6((void*)&num6);
     bstTreeObj->insertData(&data6, num6);
 
     CommonServices::Data::CTreeNode* rootNode = bstTreeObj->getRootNode();
-    lLogger(CommonServices::Logger::INFO) << "Recursive PreOrder traversal" << std::endl;
+    lLogger(CommonServices::Logger::INFO_LOG) << "Recursive PreOrder traversal" << std::endl;
     bstTreeObj->preorder_recursive(rootNode);
     std::cout << std::endl;
 
-    lLogger(CommonServices::Logger::INFO) << "Recursive InOrder traversal" << std::endl;
+    lLogger(CommonServices::Logger::INFO_LOG) << "Recursive InOrder traversal" << std::endl;
     bstTreeObj->inorder_recursive(rootNode);
     std::cout << std::endl;
 
-    lLogger(CommonServices::Logger::INFO) << "Recursive PostOrder traversal" << std::endl;
+    lLogger(CommonServices::Logger::INFO_LOG) << "Recursive PostOrder traversal" << std::endl;
     bstTreeObj->postorder_recursive(rootNode);
+    std::cout << std::endl;
+    
+    lLogger(CommonServices::Logger::INFO_LOG) << "Non-Recursive PreOrder traversal using stack" << std::endl;
+    bstTreeObj->preorder_nonrecursive();
+    std::cout << std::endl;
+
+    lLogger(CommonServices::Logger::INFO_LOG) << "Non-Recursive InOrder traversal using stack" << std::endl;
+    bstTreeObj->inorder_nonrecursive();
+    std::cout << std::endl;
+
+    lLogger(CommonServices::Logger::INFO_LOG) << "Non-Recursive PostOrder traversal using stack" << std::endl;
+    bstTreeObj->postorder_nonrecursive();
     std::cout << std::endl;
 
     if (bstTreeObj != nullptr)
@@ -111,7 +125,7 @@ int main(int argc, const char * argv[]) {
     }
     
     bstTreeObj = nullptr;
-    */
-/**********************************************************************************************************************************************/
+
+/*********************************************************************************************************************************************/
     return 0;
 }

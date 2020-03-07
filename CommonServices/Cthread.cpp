@@ -19,7 +19,7 @@ using namespace CommonServices::Logger;
 
 Cthread::Cthread(CommonServices::Logger::CLogger &pLogger) : mLogger(pLogger)
 {
-    mLogger(DEBUG) << "Entering Cthread constructor" << endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread constructor" << endl;
 
     mpMutex  =  new CMutex();
 #ifndef TEST_CODE
@@ -27,12 +27,12 @@ Cthread::Cthread(CommonServices::Logger::CLogger &pLogger) : mLogger(pLogger)
 #else
     mThreadId = 0;
 #endif
-    mLogger(DEBUG) << "Exiting Cthread constructor" << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread constructor" << endl;
 }
 
 Cthread::~Cthread()
 {
-    mLogger(DEBUG) << "Entering Cthread destructor " << endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread destructor " << endl;
     unsigned int lCount = 0;
     #ifndef TEST_CODE
     unsigned int lThreadCount = s_threadPool->length();
@@ -69,16 +69,16 @@ Cthread::~Cthread()
         delete mpMutex;
     }
     mpMutex = nullptr;
-    mLogger(DEBUG) << "Exiting Cthread destructor " << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread destructor " << endl;
 }
 
 unsigned int Cthread::addThread(Ctask* pTask)
 {
-    mLogger(DEBUG) << "Entering Cthread::addThread" << endl;
-    mLogger(INFO) << "Cthread::addThread : " << sizeof(CommonServices::CommonDefinitions::threadContext_t) << " Task name is : " << pTask->getTaskName()<< endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread::addThread" << endl;
+    mLogger(INFO_LOG) << "Cthread::addThread : " << sizeof(CommonServices::CommonDefinitions::threadContext_t) << " Task name is : " << pTask->getTaskName()<< endl;
 #ifdef TEST_CODE
     this->printData();
-    mLogger(INFO) << "\n===== mThreadId: " << mThreadId << "\n" << endl;
+    mLogger(INFO_LOG) << "\n===== mThreadId: " << mThreadId << "\n" << endl;
 #endif
 
     // Allocate and initialize lThreadContext_p
@@ -97,7 +97,7 @@ unsigned int Cthread::addThread(Ctask* pTask)
 #ifndef TEST_CODE
     lThreadContext_p->threadId = s_threadPool->insertNodeAtEnd((void*)lThreadContext_p);
 #else
-    mLogger(INFO) << "\n***====*** lThreadContext_p: " << lThreadContext_p << "\n" << endl;
+    mLogger(INFO_LOG) << "\n***====*** lThreadContext_p: " << lThreadContext_p << "\n" << endl;
     mpMutex->lockMutex();
     lThreadContext_p->threadId = mThreadId;
     mThreadContext_p[mThreadId++] = lThreadContext_p;
@@ -105,15 +105,15 @@ unsigned int Cthread::addThread(Ctask* pTask)
 #endif
 #ifdef TEST_CODE
     this->printData();
-    mLogger(INFO) << "\n****** mThreadId: " << mThreadId << "\n" << endl;
+    mLogger(INFO_LOG) << "\n****** mThreadId: " << mThreadId << "\n" << endl;
 #endif
-    mLogger(DEBUG) << "Exiting Cthread::addThread" << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread::addThread" << endl;
     return lThreadContext_p->threadId;
 }
 
 void Cthread::startThread(unsigned int threadId)
 {
-    mLogger(DEBUG) << "Entering Cthread::startThread" << endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread::startThread" << endl;
 #ifndef TEST_CODE
     CommonServices::CommonDefinitions::threadContext_t *lThreadContext_p = 
 	(CommonServices::CommonDefinitions::threadContext_t*)s_threadPool->fetchNode(threadId);
@@ -132,12 +132,12 @@ void Cthread::startThread(unsigned int threadId)
         return;
     }
 #endif
-    mLogger(DEBUG) << "Exiting Cthread::startThread" << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread::startThread" << endl;
 }
 
 void Cthread::stopThread(unsigned int threadId)
 {
-    mLogger(DEBUG) << "Entering Cthread::stopThread" << endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread::stopThread" << endl;
 #ifndef TEST_CODE
     CommonServices::CommonDefinitions::threadContext_t *lThreadContext_p = 
 	(CommonServices::CommonDefinitions::threadContext_t*)s_threadPool->fetchNode(threadId);
@@ -147,7 +147,7 @@ void Cthread::stopThread(unsigned int threadId)
     mThreadContext_p[threadId]->task_p->cleanup();
     mpMutex->unLockMutex();
 #endif
-    mLogger(DEBUG) << "Exiting Cthread::stopThread" << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread::stopThread" << endl;
 }
 
 void* Cthread::threadCallback(void *data)
@@ -159,47 +159,47 @@ void* Cthread::threadCallback(void *data)
 
 void Cthread::join()
 {
-    mLogger(DEBUG) << "Entering Cthread::join" << endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread::join" << endl;
     void *ret = nullptr;
 #ifndef TEST_CODE
     unsigned int lThreadCount = s_threadPool->length();
-    mLogger(INFO) << "Total number of active threads : " << lThreadCount << endl;
+    mLogger(INFO_LOG) << "Total number of active threads : " << lThreadCount << endl;
     for(unsigned int lCount = 0 ; lCount < lThreadCount; lCount++)
     {
         s_threadPool->printData();
         CommonServices::CommonDefinitions::threadContext_t *lThreadContext_p = 
 	    (CommonServices::CommonDefinitions::threadContext_t*)(s_threadPool->getDataByIndex(lCount));
-        mLogger(INFO) << "Cthread::join--> Thread ID : " << lThreadContext_p->threadId<< endl;
+        mLogger(INFO_LOG) << "Cthread::join--> Thread ID : " << lThreadContext_p->threadId<< endl;
         if (pthread_join(lThreadContext_p->mThreadStruct, &ret) != 0) {
-            mLogger(ERROR) << "pthread_join() error" << std::endl;
+            mLogger(ERROR_LOG) << "pthread_join() ERROR_LOG" << std::endl;
             exit(3);
         }
     }
 #else
-    mLogger(INFO) << "Total number of active threads : " << mThreadId << endl;
+    mLogger(INFO_LOG) << "Total number of active threads : " << mThreadId << endl;
     for( unsigned int lCount = 0; lCount < mThreadId; lCount++)
     {
         CommonServices::CommonDefinitions::threadContext_t*    lThreadContext_p    =    mThreadContext_p[lCount];
-        mLogger(INFO) << "lCount : " << lCount<< endl;
-        mLogger(INFO) << "Cthread::join--> Thread Name : " << lThreadContext_p->task_p->getTaskName()<< endl;
+        mLogger(INFO_LOG) << "lCount : " << lCount<< endl;
+        mLogger(INFO_LOG) << "Cthread::join--> Thread Name : " << lThreadContext_p->task_p->getTaskName()<< endl;
         if (pthread_join(lThreadContext_p->mThreadStruct, &ret) != 0) {
-            mLogger(ERROR) << "pthread_join() error" << std::endl;
+            mLogger(ERROR_LOG) << "pthread_join() ERROR_LOG" << std::endl;
             exit(3);
         }
     }
 #endif
-    mLogger(DEBUG) << "Exiting Cthread::join" << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread::join" << endl;
 }
 
 #ifdef TEST_CODE
 void Cthread::printData()
 {
-    mLogger(DEBUG) << "Entering Cthread::printData" << endl;
+    mLogger(DEBUG_LOG) << "Entering Cthread::printData" << endl;
     for( unsigned int lCount = 0; lCount < mThreadId; lCount++)
     {
         CommonServices::CommonDefinitions::threadContext_t*    lThreadContext_p    =    mThreadContext_p[lCount];
-        mLogger(INFO) << "\n+++++Thread Name : " << lThreadContext_p<< "\n" << endl;
+        mLogger(INFO_LOG) << "\n+++++Thread Name : " << lThreadContext_p<< "\n" << endl;
     }
-    mLogger(DEBUG) << "Exiting Cthread::printData" << endl;
+    mLogger(DEBUG_LOG) << "Exiting Cthread::printData" << endl;
 }
 #endif

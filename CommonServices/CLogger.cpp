@@ -16,17 +16,11 @@ using namespace CommonServices::Logger;
 CLogger::CLogger(LOG_LEVEL_ENUM    pAppLogLevel)
 	:mAppLogLevel(pAppLogLevel)
 {
-    this->mDefaultLogLevel  =   DEBUG;
-    mpMutex  = new Services::CMutex();
+    this->mDefaultLogLevel  =   DEBUG_LOG;
 }
 
 CLogger::~CLogger()
 {
-    if (mpMutex != nullptr)
-    {
-        delete mpMutex;
-    }
-    mpMutex = nullptr;
 }
 
 std::string CLogger::getCurrentDateTime()
@@ -45,21 +39,31 @@ std::string CLogger::getCurrentDateTime()
 
 std::ostream& CLogger::operator<<(const char *pLogMessageStream)
 {
-    LOG_PRINT(pLogMessageStream)
+    std::lock_guard<std::mutex> lock(lMutex);
+    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
+    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
+    return lOStream;
 }
 
 std::ostream& CLogger::operator<<(unsigned int pLogMessageStream)
 {
-    LOG_PRINT(pLogMessageStream)
+    std::lock_guard<std::mutex> lock(lMutex);
+    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
+    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
+    return lOStream;
 }
 
 std::ostream& CLogger::operator<<(std::string pLogMessageStream)
 {
-    LOG_PRINT(pLogMessageStream)
+    std::lock_guard<std::mutex> lock(lMutex);
+    std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
+    std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
+    return lOStream;
 }
 
 CLogger& CLogger::operator()(LOG_LEVEL_ENUM pLogLevel)
 {
+    std::lock_guard<std::mutex> lock(lMutex);
     this->mDefaultLogLevel = pLogLevel;
     return *this;
 }

@@ -16,12 +16,12 @@ Ctask::Ctask(std::string pTaskName, CommonServices::Container::CQueue *pPipeline
 	CommonServices::Logger::CLogger &pLogger)
     :mLogger(pLogger), m_taskName(pTaskName), m_Pipeline(pPipeline)
 {
-    mLogger(DEBUG) << "Entering Ctask::constructor initialised by " << m_taskName << std::endl;
-    mLogger(DEBUG) << "Existing Ctask::constructor initialised by " << m_taskName << std::endl;
+    mLogger(DEBUG_LOG) << "Entering Ctask::constructor initialised by " << m_taskName << std::endl;
+    mLogger(DEBUG_LOG) << "Existing Ctask::constructor initialised by " << m_taskName << std::endl;
 }
 
 Ctask::~Ctask()
 {
-    mLogger(DEBUG) << "Entering Ctask::destructor initialised by " << m_taskName << std::endl;
-    mLogger(DEBUG) << "Entering Ctask::destructor initialised by " << m_taskName << std::endl;
+    mLogger(DEBUG_LOG) << "Entering Ctask::destructor initialised by " << m_taskName << std::endl;
+    mLogger(DEBUG_LOG) << "Entering Ctask::destructor initialised by " << m_taskName << std::endl;
 }

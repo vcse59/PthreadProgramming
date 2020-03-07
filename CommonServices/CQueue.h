@@ -9,6 +9,7 @@
 #ifndef CQueue_h
 #define CQueue_h
 
+#include <stdio.h>
 #include "../AppData/CPipelineDataClass.h"
 #include "CMutex.h"
 #include "CLinkList.h"
@@ -18,39 +19,38 @@ namespace CommonServices
 {
     namespace Container
     {
-	class CQueue
-	{
+        class CQueue
+        {
 
-	    public:
-		CQueue(CommonServices::Logger::CLogger& pLogger);
-		~CQueue();
+            public:
+            CQueue(Logger::CLogger& pLogger);
+            ~CQueue();
 
-		bool isEmpty();
+            bool isEmpty();
 
-		unsigned int size();
+            unsigned int size();
 
-		void push_front(char* pData, unsigned int pDataId);
+            void push_front(char* pData, unsigned int pDataId);
 
-		void push_back(char* pData, unsigned int pDataId);
+            void push_back(char* pData, unsigned int pDataId);
 
-		void erase(unsigned dataId);
+            void erase(unsigned dataId);
 
-		char* pop_front();
+            char* pop_front();
 
-		char* pop_back();
+            char* pop_back();
 
-		void setExecutionFlag(bool isStop);
+            void setExecutionFlag(bool isStop);
 
-		bool getExecutionFlag();
+            bool getExecutionFlag();
 
-	    private:
-		CommonServices::Logger::CLogger&	mLogger;
-		CommonServices::Container::CLinkList*  dQueueContainer;
-		bool        mStopFlag;
-		CommonServices::Services::CMutex*     mpMutex;
-	};
+            private:
+            CommonServices::Logger::CLogger&	mLogger;
+            CommonServices::Container::CLinkList*  dQueueContainer;
+            bool        mStopFlag;
+            CommonServices::Services::CMutex*     mpMutex;
+        };
     }
 }
-#include <stdio.h>
 
 #endif /* CQueue_h */

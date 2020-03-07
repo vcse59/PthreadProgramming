@@ -18,11 +18,11 @@ namespace CommonServices
     {
 	enum LOG_LEVEL_ENUM
 	{
-	    NONE     =   -1,
-	    ERROR    =   NONE      +   1,
-	    WARNING  =   ERROR     +   1,
-	    INFO     =   WARNING   +   1,
-	    DEBUG    =   INFO      +   1
+	    NONE         =   -1,
+	    ERROR_LOG    =   NONE      +   1,
+	    WARNING_LOG  =   ERROR_LOG     +   1,
+	    INFO_LOG     =   WARNING_LOG   +   1,
+	    DEBUG_LOG    =   INFO_LOG      +   1
 	};
 
 	class CLogLevel

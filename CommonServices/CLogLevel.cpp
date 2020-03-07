@@ -12,10 +12,10 @@
 using namespace CommonServices::Logger;
 
 std::string LOG_LEVEL_STRING[] = {
-    "ERROR",
+    "ERROR  ",
     "WARNING",
-    "INFO",
-    "DEBUG"
+    "INFO   ",
+    "DEBUG  "
 };
 
 std::string CLogLevel::getLogLevelString(LOG_LEVEL_ENUM pLogLevel)
