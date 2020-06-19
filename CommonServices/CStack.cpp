@@ -20,24 +20,35 @@ CStack::CStack(CommonServices::Logger::CLogger& pLogger)
 {
     mLogger(DEBUG_LOG) << "Entering CStack constructor" << std::endl;
     mStackContainer = new CLinkList(mLogger);
+    mMutex = new CommonServices::Services::CMutex();
     mLogger(DEBUG_LOG) << "Exiting CStack constructor" << std::endl;
 }
 
 CStack::~CStack()
 {
     mLogger(DEBUG_LOG) << "Entering CStack destructor" << std::endl;
+    mMutex->lockMutex();
     if (mStackContainer != nullptr)
     {
         delete mStackContainer;
     }
     mStackContainer = nullptr;
+    mMutex->unLockMutex();
+
+    if (mMutex != nullptr)
+    {
+        delete mMutex;
+    }
+    mMutex = nullptr;
     mLogger(DEBUG_LOG) << "Exiting CStack destructor" << std::endl;
 }
 
 bool CStack::push(char* pData)
 {
     mLogger(DEBUG_LOG) << "Entering CStack::push" << std::endl;
+    mMutex->lockMutex();
     mStackContainer->insertNodeAtStart((void*) pData);
+    mMutex->unLockMutex();
     mLogger(DEBUG_LOG) << "Exiting CStack::push" << std::endl;
     return true;
 }
@@ -45,6 +56,7 @@ bool CStack::push(char* pData)
 char* CStack::pop()
 {
     mLogger(DEBUG_LOG) << "Entering CStack::pop" << std::endl;
+    mMutex->lockMutex();
     void *lData = mStackContainer->begin();
     
     if (lData == nullptr)
@@ -57,6 +69,7 @@ char* CStack::pop()
     {
         mLogger(INFO_LOG) << "Stack Data is successfully popped" << std::endl;
     }
+    mMutex->unLockMutex();
     mLogger(DEBUG_LOG) << "Exiting CStack::pop" << std::endl;
     return (char*)lData;
 }

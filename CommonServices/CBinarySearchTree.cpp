@@ -22,12 +22,18 @@ CBinarySearchTree::CBinarySearchTree(CommonServices::Logger::CLogger &pLogger)
 {
     mLogger(DEBUG_LOG) << "Entering CBinarySearchTree constructor" << std::endl;
     mBSTRoot = nullptr;
+    mMutex  = new CommonServices::Services::CMutex();
     mLogger(DEBUG_LOG) << "Exiting CBinarySearchTree constructor" << std::endl;
 }
 
 CBinarySearchTree::~CBinarySearchTree()
 {
     mLogger(DEBUG_LOG) << "Entering CBinarySearchTree destructor" << std::endl;
+    if (mMutex != nullptr)
+    {
+        delete mMutex;
+    }
+    mMutex = nullptr;
     mLogger(DEBUG_LOG) << "Exiting CBinarySearchTree destructor" << std::endl;
 }
 
@@ -39,9 +45,12 @@ CTreeNode* CBinarySearchTree::getRootNode()
 }
 
 //Tree operations
-bool CBinarySearchTree::insertData(CommonServices::Data::CTreeNode *pNode, unsigned int pNodeId)
+bool CBinarySearchTree::insertData(CommonServices::Data::CTreeNode *pNode)
 {
+    mMutex->lockMutex();
     mLogger(DEBUG_LOG) << "Entering CBinarySearchTree::insertData" << std::endl;
+
+    CTreeNode* leafNode = mBSTRoot;
 
     if (mBSTRoot == nullptr)
     {
@@ -50,15 +59,14 @@ bool CBinarySearchTree::insertData(CommonServices::Data::CTreeNode *pNode, unsig
     else
     {
         CTreeNode *tempNode = mBSTRoot;
-        CTreeNode* leafNode = mBSTRoot;
-        unsigned int *nodePtr = (unsigned int *)pNode->getValue();
-        unsigned int nodeValue = *nodePtr;
 
         while (tempNode != nullptr)
         {
             leafNode = tempNode;
-            unsigned int * tempNodeValue = (unsigned int*)tempNode->getValue();
-            if (nodeValue <= (*tempNodeValue))
+            unsigned int  tempNodeValue = tempNode->getNodeID();
+            unsigned int   pNodeID	= pNode->getNodeID();
+
+            if (pNodeID <= tempNodeValue)
             {
                 tempNode = tempNode->getLeftNodeAddress();
             }
@@ -68,8 +76,9 @@ bool CBinarySearchTree::insertData(CommonServices::Data::CTreeNode *pNode, unsig
             }
         }
 
-        unsigned int *leafNodeValue = (unsigned int*)leafNode->getValue();
-        if (nodeValue <= (*leafNodeValue))
+        unsigned int leafNodeValue = leafNode->getNodeID();
+        unsigned int   pNodeID	   = pNode->getNodeID();
+        if (pNodeID <= leafNodeValue)
         {
             leafNode->setLeftNodeAddress(pNode);
         }
@@ -77,10 +86,10 @@ bool CBinarySearchTree::insertData(CommonServices::Data::CTreeNode *pNode, unsig
         {
             leafNode->setRightNodeAddress(pNode);
         }
-        leafNode->setNodeID(pNodeId);
     }
 
     mLogger(DEBUG_LOG) << "Exiting CBinarySearchTree::insertData" << std::endl;
+    mMutex->unLockMutex();
     return true;
 }
 
@@ -110,8 +119,8 @@ void CBinarySearchTree::preorder_recursive(CTreeNode *pHeadNode)
 {
     if (pHeadNode != nullptr)
     {
-	unsigned int *nodePtr = (unsigned int*)pHeadNode->getValue();
-	std::cout << *nodePtr << " ";
+	unsigned int nodeValue = pHeadNode->getNodeID();
+	std::cout << nodeValue << " ";
 	this->preorder_recursive(pHeadNode->getLeftNodeAddress());
 	this->preorder_recursive(pHeadNode->getRightNodeAddress());
     }
@@ -122,8 +131,8 @@ void CBinarySearchTree::inorder_recursive(CTreeNode *pHeadNode)
     if (pHeadNode != nullptr)
     {
 	this->inorder_recursive(pHeadNode->getLeftNodeAddress());
-	unsigned int *nodePtr = (unsigned int*)pHeadNode->getValue();
-	std::cout << *nodePtr << " ";
+	unsigned int nodeValue = pHeadNode->getNodeID();
+	std::cout << nodeValue << " ";
 	this->inorder_recursive(pHeadNode->getRightNodeAddress());
     }
 }
@@ -134,14 +143,16 @@ void CBinarySearchTree::postorder_recursive(CTreeNode *pHeadNode)
     {
 	this->postorder_recursive(pHeadNode->getLeftNodeAddress());
 	this->postorder_recursive(pHeadNode->getRightNodeAddress());
-	unsigned int *nodePtr = (unsigned int*)pHeadNode->getValue();
-	std::cout << *nodePtr << " ";
+	unsigned int nodeValue = pHeadNode->getNodeID();
+	std::cout << nodeValue << " ";
     }
 }
 
 //Tree traversal using queue
 void CBinarySearchTree::preorder_nonrecursive()
 {
+    mMutex->lockMutex();
+
     CTreeNode *rootNode = mBSTRoot;
     CommonServices::Container::CStack*  lStackContainer = new CommonServices::Container::CStack(mLogger);
 
@@ -149,8 +160,8 @@ void CBinarySearchTree::preorder_nonrecursive()
     {
         while (rootNode != nullptr)
         {
-            unsigned int * tempNodeValue = (unsigned int*)rootNode->getValue();
-            std::cout << *tempNodeValue << std::endl;
+            unsigned int nodeValue = rootNode->getNodeID();
+            std::cout << nodeValue << std::endl;
             lStackContainer->push((char*)rootNode);
             rootNode = rootNode->getLeftNodeAddress();
         }
@@ -167,10 +178,13 @@ void CBinarySearchTree::preorder_nonrecursive()
         delete lStackContainer;
     }
     lStackContainer = nullptr;
+    mMutex->unLockMutex();
 }
 
 void CBinarySearchTree::inorder_nonrecursive()
 {
+    mMutex->lockMutex();
+
     CTreeNode *rootNode = mBSTRoot;
     CommonServices::Container::CStack*  lStackContainer = new CommonServices::Container::CStack(mLogger);
 
@@ -186,8 +200,8 @@ void CBinarySearchTree::inorder_nonrecursive()
             break;
         
         CTreeNode *tempNode = (CTreeNode *) lStackContainer->pop();
-        unsigned int * tempNodeValue = (unsigned int*)tempNode->getValue();
-        std::cout << *tempNodeValue << std::endl;
+        unsigned int nodeValue = tempNode->getNodeID();
+        std::cout << nodeValue << std::endl;
         rootNode = tempNode->getRightNodeAddress();
     }
     
@@ -196,10 +210,13 @@ void CBinarySearchTree::inorder_nonrecursive()
         delete lStackContainer;
     }
     lStackContainer = nullptr;
+    mMutex->unLockMutex();
 }
 
 void CBinarySearchTree::postorder_nonrecursive()
 {
+    mMutex->lockMutex();
+
     CTreeNode *rootNode = mBSTRoot;
     CommonServices::Container::CStack*  lStackContainer = new CommonServices::Container::CStack(mLogger);
     CommonServices::Container::CStack*  lStackStorage = new CommonServices::Container::CStack(mLogger);
@@ -223,13 +240,15 @@ void CBinarySearchTree::postorder_nonrecursive()
     while (lStackStorage->size() > 0)
     {
         CTreeNode *tempNode = (CTreeNode *) lStackStorage->pop();
-        unsigned int * tempNodeValue = (unsigned int*)tempNode->getValue();
-        std::cout << *tempNodeValue << std::endl;
+        unsigned int nodeValue = tempNode->getNodeID();
+        std::cout << nodeValue << std::endl;
     }
-    
+
     if (lStackContainer != nullptr)
     {
         delete lStackContainer;
     }
     lStackContainer = nullptr;
+
+    mMutex->unLockMutex();
 }

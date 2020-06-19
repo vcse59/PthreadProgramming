@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6806B4D52410201E0016EDF4 /* CStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6806B4D32410201E0016EDF4 /* CStack.cpp */; };
 		6824800F222892EC00E7B95D /* CDataPackUnPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6824800D222892EC00E7B95D /* CDataPackUnPack.cpp */; };
 		6824801722289FC300E7B95D /* CPipelineDataClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6824801522289FC300E7B95D /* CPipelineDataClass.cpp */; };
 		6824801B2229A2CE00E7B95D /* DebugThreadClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 682480192229A2CE00E7B95D /* DebugThreadClass.cpp */; };
@@ -18,6 +19,8 @@
 		68842CC0237A5BC40089D1EC /* CMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68842CBE237A5BC40089D1EC /* CMutex.cpp */; };
 		68C5CF4021BE194500DC1A46 /* CLinkList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68C5CF3D21BE194500DC1A46 /* CLinkList.cpp */; };
 		68C5CF4321BE1AD400DC1A46 /* CNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68C5CF4221BE1AD400DC1A46 /* CNode.cpp */; };
+		68E57666240869E300F20B3F /* CTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68E57662240869E300F20B3F /* CTreeNode.cpp */; };
+		68E57667240869E300F20B3F /* CBinarySearchTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68E57665240869E300F20B3F /* CBinarySearchTree.cpp */; };
 		68EA098A21BC123D00ABAE04 /* CConsumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68EA098821BC123D00ABAE04 /* CConsumer.cpp */; };
 		68F417C121B9A8A800A1390F /* CProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F417BF21B9A8A800A1390F /* CProducer.cpp */; };
 		68FA81F62384C4960063FE97 /* CLogLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68FA81F52384C4960063FE97 /* CLogLevel.cpp */; };
@@ -36,6 +39,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6806B4D32410201E0016EDF4 /* CStack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CStack.cpp; sourceTree = "<group>"; };
+		6806B4D42410201E0016EDF4 /* CStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CStack.h; sourceTree = "<group>"; };
 		6824800D222892EC00E7B95D /* CDataPackUnPack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CDataPackUnPack.cpp; sourceTree = "<group>"; };
 		6824800E222892EC00E7B95D /* CDataPackUnPack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDataPackUnPack.h; sourceTree = "<group>"; };
 		6824801522289FC300E7B95D /* CPipelineDataClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPipelineDataClass.cpp; sourceTree = "<group>"; };
@@ -59,6 +64,10 @@
 		68C5CF3D21BE194500DC1A46 /* CLinkList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CLinkList.cpp; sourceTree = "<group>"; };
 		68C5CF4121BE1AD400DC1A46 /* CNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNode.h; sourceTree = "<group>"; };
 		68C5CF4221BE1AD400DC1A46 /* CNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CNode.cpp; sourceTree = "<group>"; };
+		68E57662240869E300F20B3F /* CTreeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTreeNode.cpp; sourceTree = "<group>"; };
+		68E57663240869E300F20B3F /* CBinarySearchTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBinarySearchTree.h; sourceTree = "<group>"; };
+		68E57664240869E300F20B3F /* CTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTreeNode.h; sourceTree = "<group>"; };
+		68E57665240869E300F20B3F /* CBinarySearchTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CBinarySearchTree.cpp; sourceTree = "<group>"; };
 		68EA098821BC123D00ABAE04 /* CConsumer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CConsumer.cpp; sourceTree = "<group>"; };
 		68EA098921BC123D00ABAE04 /* CConsumer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CConsumer.h; sourceTree = "<group>"; };
 		68F417BB21B86D5300A1390F /* CommonDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDefs.h; sourceTree = "<group>"; };
@@ -122,6 +131,10 @@
 		683B515421B6FC0E00DECAFD /* CommonServices */ = {
 			isa = PBXGroup;
 			children = (
+				68E57665240869E300F20B3F /* CBinarySearchTree.cpp */,
+				68E57663240869E300F20B3F /* CBinarySearchTree.h */,
+				68E57662240869E300F20B3F /* CTreeNode.cpp */,
+				68E57664240869E300F20B3F /* CTreeNode.h */,
 				68C5CF4221BE1AD400DC1A46 /* CNode.cpp */,
 				68C5CF4121BE1AD400DC1A46 /* CNode.h */,
 				68C5CF3D21BE194500DC1A46 /* CLinkList.cpp */,
@@ -141,6 +154,8 @@
 				68842CBF237A5BC40089D1EC /* CMutex.h */,
 				68F9CF47237B70640041519F /* CLogLevel.h */,
 				68FA81F52384C4960063FE97 /* CLogLevel.cpp */,
+				6806B4D32410201E0016EDF4 /* CStack.cpp */,
+				6806B4D42410201E0016EDF4 /* CStack.h */,
 			);
 			path = CommonServices;
 			sourceTree = "<group>";
@@ -203,6 +218,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 683B514921B6FC0E00DECAFD;
 			productRefGroup = 683B515321B6FC0E00DECAFD /* Products */;
@@ -223,9 +239,12 @@
 				68FA81F62384C4960063FE97 /* CLogLevel.cpp in Sources */,
 				68C5CF4321BE1AD400DC1A46 /* CNode.cpp in Sources */,
 				68F417C121B9A8A800A1390F /* CProducer.cpp in Sources */,
+				68E57667240869E300F20B3F /* CBinarySearchTree.cpp in Sources */,
+				6806B4D52410201E0016EDF4 /* CStack.cpp in Sources */,
 				6824800F222892EC00E7B95D /* CDataPackUnPack.cpp in Sources */,
 				68360F3621EA72970032698B /* CQueue.cpp in Sources */,
 				6824801B2229A2CE00E7B95D /* DebugThreadClass.cpp in Sources */,
+				68E57666240869E300F20B3F /* CTreeNode.cpp in Sources */,
 				683B515621B6FC0E00DECAFD /* main.cpp in Sources */,
 				683B516221B6FF2800DECAFD /* Ctask.cpp in Sources */,
 				68EA098A21BC123D00ABAE04 /* CConsumer.cpp in Sources */,
@@ -353,16 +372,22 @@
 		683B515A21B6FC0E00DECAFD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		683B515B21B6FC0E00DECAFD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -31,7 +31,6 @@ int main(int argc, const char * argv[]) {
 /*****************************************************************************Thread pipeline implentation**************************************/
     // Instantiating pipeline
 
-    /*
     CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
     CommonServices::Services::Cthread thread_p(lLogger);
     CommonServices::Container::CQueue lPipeline(lLogger);
@@ -60,39 +59,39 @@ int main(int argc, const char * argv[]) {
     }
     
     thread_p.join();
-    */
-    
+
 /***********************************************************************************************************************************************/
 
 
 /******************************************************Binary search tree implementation********************************************************/
 
+    /*
     CommonServices::Logger::CLogger lLogger(CommonServices::Logger::NONE);
     CommonServices::Services::CBinarySearchTree* bstTreeObj = new CommonServices::Services::CBinarySearchTree(lLogger);
 
     unsigned int num1 = 91;
-    CommonServices::Data::CTreeNode data1((void*)&num1);
-    bstTreeObj->insertData(&data1, num1);
+    CommonServices::Data::CTreeNode data1((void*)&num1, num1);
+    bstTreeObj->insertData(&data1);
 
     unsigned int num2 = 25;
-    CommonServices::Data::CTreeNode data2((void*)&num2);
-    bstTreeObj->insertData(&data2, num2);
+    CommonServices::Data::CTreeNode data2((void*)&num2, num2);
+    bstTreeObj->insertData(&data2);
 
     unsigned int num3 = 35;
-    CommonServices::Data::CTreeNode data3((void*)&num3);
-    bstTreeObj->insertData(&data3, num3);
+    CommonServices::Data::CTreeNode data3((void*)&num3, num3);
+    bstTreeObj->insertData(&data3);
 
     unsigned int num4 = 67;
-    CommonServices::Data::CTreeNode data4((void*)&num4);
-    bstTreeObj->insertData(&data4, num4);
+    CommonServices::Data::CTreeNode data4((void*)&num4, num4);
+    bstTreeObj->insertData(&data4);
 
     unsigned int num5 = 2;
-    CommonServices::Data::CTreeNode data5((void*)&num5);
-    bstTreeObj->insertData(&data5, num5);
+    CommonServices::Data::CTreeNode data5((void*)&num5, num5);
+    bstTreeObj->insertData(&data5);
 
     unsigned int num6 = 54;
-    CommonServices::Data::CTreeNode data6((void*)&num6);
-    bstTreeObj->insertData(&data6, num6);
+    CommonServices::Data::CTreeNode data6((void*)&num6, num6);
+    bstTreeObj->insertData(&data6);
 
     CommonServices::Data::CTreeNode* rootNode = bstTreeObj->getRootNode();
     lLogger(CommonServices::Logger::INFO_LOG) << "Recursive PreOrder traversal" << std::endl;
@@ -125,7 +124,7 @@ int main(int argc, const char * argv[]) {
     }
     
     bstTreeObj = nullptr;
-
+    */
 /*********************************************************************************************************************************************/
     return 0;
 }

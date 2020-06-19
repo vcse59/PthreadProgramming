@@ -19,15 +19,19 @@ using namespace CommonServices::Services;
 CNode::CNode(void* pData)
 :mDataItem(pData), mNodePtr(nullptr)
 {
-    //std::cout << "Calling CNode constructor" << std::endl;
     mNodeId = NOT_INITIALIZED;
+    mpMutex = new CommonServices::Services::CMutex();
 }
 
 CNode::~CNode()
 {
-    //std::cout << "Calling CNode destructor" << std::endl;
     mDataItem = nullptr;
     mNodePtr = nullptr;
+    if (mpMutex != nullptr)
+    {
+        delete mpMutex;
+    }
+    mpMutex = nullptr;
 }
 
 void* CNode::getValue()
@@ -37,7 +41,9 @@ void* CNode::getValue()
 
 void CNode::setNextNodeAddress(CNode *nodeAddr)
 {
+    mpMutex->lockMutex();
     mNodePtr = nodeAddr;
+    mpMutex->unLockMutex();
 }
 
 CNode* CNode::getNextNodeAddress()
@@ -47,7 +53,9 @@ CNode* CNode::getNextNodeAddress()
 
 void CNode::setNodeID(unsigned int pNodeId)
 {
+    mpMutex->lockMutex();
     mNodeId = pNodeId;
+    mpMutex->unLockMutex();
 }
 
 unsigned int CNode::getNodeID()

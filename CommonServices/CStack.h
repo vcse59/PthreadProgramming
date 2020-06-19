@@ -35,6 +35,7 @@ namespace CommonServices
             
             CommonServices::Container::CLinkList    *mStackContainer;
             CommonServices::Logger::CLogger&        mLogger;
+            CommonServices::Services::CMutex*       mMutex;
         };
     }
 }

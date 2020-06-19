@@ -39,25 +39,28 @@ std::string CLogger::getCurrentDateTime()
 
 std::ostream& CLogger::operator<<(const char *pLogMessageStream)
 {
-    std::lock_guard<std::mutex> lock(lMutex);
     std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
+    lMutex.lock();
     std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
+    lMutex.unlock();
     return lOStream;
 }
 
 std::ostream& CLogger::operator<<(unsigned int pLogMessageStream)
 {
-    std::lock_guard<std::mutex> lock(lMutex);
     std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
+    lMutex.lock();
     std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
+    lMutex.unlock();
     return lOStream;
 }
 
 std::ostream& CLogger::operator<<(std::string pLogMessageStream)
 {
-    std::lock_guard<std::mutex> lock(lMutex);
     std::string lLogLevelStr = mLogLevel.getLogLevelString(this->mDefaultLogLevel);
+    lMutex.lock();
     std::ostream& lOStream = std::cout << this->getCurrentDateTime() << " " << lLogLevelStr << " " << pLogMessageStream;
+    lMutex.unlock();
     return lOStream;
 }
 

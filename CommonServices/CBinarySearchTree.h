@@ -14,6 +14,7 @@
 #include "CLogger.h"
 #include "CTreeNode.h"
 #include "CQueue.h"
+#include "CMutex.h"
 
 namespace CommonServices
 {
@@ -27,7 +28,7 @@ namespace CommonServices
                 CommonServices::Data::CTreeNode* getRootNode();
 
                 //Tree operations
-                bool	insertData(CommonServices::Data::CTreeNode *pNode, unsigned int pNodeId);
+                bool	insertData(CommonServices::Data::CTreeNode *pNode);
                 bool	erase();
                 bool	search(const CommonServices::Data::CTreeNode *pNode);
                 bool	eraseItem(const CommonServices::Data::CTreeNode *pNode);
@@ -48,6 +49,7 @@ namespace CommonServices
 
                 CommonServices::Logger::CLogger&    mLogger;
                 CommonServices::Data::CTreeNode*    mBSTRoot;
+                CommonServices::Services::CMutex*   mMutex;
         };
     }
 }

@@ -9,6 +9,8 @@
 #ifndef Node_h
 #define Node_h
 
+#include "CMutex.h"
+
 namespace CommonServices
 {
     namespace Data
@@ -28,6 +30,8 @@ namespace CommonServices
 		void  *mDataItem;
 		CommonServices::Data::CNode *mNodePtr;
 		unsigned int mNodeId;
+        CommonServices::Services::CMutex*            mpMutex;
+
 	};
     }
 }

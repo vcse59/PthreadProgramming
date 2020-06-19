@@ -8,6 +8,7 @@
 
 #ifndef CTreeNode_h
 #define CTreeNode_h
+#include "CMutex.h"
 
 namespace CommonServices
 {
@@ -16,18 +17,17 @@ namespace CommonServices
 	class CTreeNode
 	{
 	    public:
-		CTreeNode(void* pData);
+		CTreeNode(void* pData, unsigned int pNodeID);
 		~CTreeNode();
-		
+
 		void* getValue();
 
 		void setLeftNodeAddress(CTreeNode *);
 		void setRightNodeAddress(CTreeNode *);
-		
+
 		CTreeNode* getLeftNodeAddress();
 		CTreeNode* getRightNodeAddress();
 
-		void setNodeID(unsigned int pNodeId);
 		unsigned int getNodeID();
 
 	    private:
@@ -35,6 +35,7 @@ namespace CommonServices
 		CommonServices::Data::CTreeNode *mLeftNodePtr;
 		CommonServices::Data::CTreeNode *mRightNodePtr;
 		unsigned int mNodeId;
+		CommonServices::Services::CMutex *mMutex;
 
 		CTreeNode(const CTreeNode& pNode);
 		CTreeNode& operator=(const CTreeNode& pNode);
