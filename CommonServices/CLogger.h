@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <mutex>
 #include "CLogLevel.h"
 
 namespace CommonServices
