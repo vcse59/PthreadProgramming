@@ -9,7 +9,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "CProducer.h"
-#include "../AppData/CPipelineDataClass.h"
+#include "AppData/CPipelineDataClass.h"
 
 using namespace CommonServices::Logger;
 using namespace ApplicationData::Producer;

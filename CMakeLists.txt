@@ -5,7 +5,7 @@ include(CTest)
 enable_testing()
 
 # Include source code include directories
-include_directories(AppData CommonServices ConsumerClass ProducerClass DebugThread)
+include_directories(.)
 
 # Specify the source files
 file(GLOB SOURCES CONFIGURE_DEPENDS "AppData/*" "CommonServices/*" "ProducerClass/*" "CommonServices/*" "DebugThread/*")
